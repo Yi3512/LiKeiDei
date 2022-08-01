@@ -115,7 +115,7 @@ export default {
         this.$router.push("/dashboard");
         this.$message({
           showClose: true,
-          message: "登录成功",
+          message: "登录成功!",
           type: "success",
         });
       });
