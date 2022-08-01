@@ -1,0 +1,16 @@
+{
+  "id": "3557954",
+  "name": "dkdd",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5961299",
+      "name": "安全",
+      "font_class": "anquan",
+      "unicode": "ec4d",
+      "unicode_decimal": 60493
+    }
+  ]
+}
