@@ -8,6 +8,7 @@ export default {
     random: "",
     // 登录用户信息
     UserLoginInfoList: "",
+    token: "",
   },
   mutations: {
     setclientToken(state, payload) {
@@ -17,6 +18,7 @@ export default {
     // 登录成功返回的数据
     setLoginSin(state, payload) {
       state.UserLoginInfoList = payload;
+      state.token = payload.token;
     },
   },
   actions: {
@@ -42,6 +44,11 @@ export default {
       console.log(context, 123);
       const UserBasicInfo = await getUserInfo(context.UserLoginInfoList.userId);
       console.log(UserBasicInfo, "用户基本信息");
+    },
+    // 退出
+    logout(context) {
+      context.commit("setToken", "");
+      context.commit("setUserInfo", {});
     },
   },
   getters: {},
