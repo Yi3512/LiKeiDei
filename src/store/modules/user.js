@@ -32,12 +32,12 @@ export default {
     async Login(context, payload) {
       // 请求的数据
       const res = await Login(payload);
-      const UserLoginInfo = res.data;
-      console.log(res.data, "用户登录数据");
+      const UserLoginInfo = res;
+      console.log(res, "用户登录数据");
       // 用户基本信息
-      const UserBasicInfo = await getUserInfo(UserLoginInfo.userId);
+      const UserBasicInfo = await getUserInfo(UserLoginInfo.data.userId);
       console.log(UserBasicInfo, "用户基本信息");
-      context.commit("setLoginSin", UserLoginInfo.token);
+      context.commit("setLoginSin", UserLoginInfo.data.token);
       // 把token给存入本地
     },
   },
