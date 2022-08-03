@@ -35,8 +35,8 @@ export default {
       const UserLoginInfo = res;
       console.log(res, "用户登录数据");
       // 用户基本信息
-      const UserBasicInfo = await getUserInfo(UserLoginInfo.data.userId);
-      console.log(UserBasicInfo, "用户基本信息");
+      // const UserBasicInfo = await getUserInfo(UserLoginInfo.data.userId);
+      // console.log(UserBasicInfo, "用户基本信息");
       context.commit("setLoginSin", UserLoginInfo.data.token);
       // 把token给存入本地
     },
