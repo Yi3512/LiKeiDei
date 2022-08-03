@@ -15,8 +15,8 @@ service.interceptors.response.use(
     if (res.config.url.includes("/api/user-service/user/imageCode/")) {
       return res.request.responseURL;
     }
-    if (res) {
-      return res
+    if (res.data.success) {
+      return res;
     }
     // Message.error(res.data.msg);
     // return Promise.reject(new Error(res.data.msg));
@@ -25,6 +25,6 @@ service.interceptors.response.use(
   //   Message.error("系统异常");
   //   return Promise.reject(error);
   // }
-); 
-service.interceptors.response.use()
+);
+service.interceptors.response.use();
 export default service; // 导出axios实例
