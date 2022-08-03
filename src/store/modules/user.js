@@ -1,4 +1,4 @@
-import { VerifyCode, Login } from "@/api/user";
+import { VerifyCode, Login, getUserInfo } from "@/api/user";
 export default {
   namespaced: true,
   state: {
@@ -6,9 +6,8 @@ export default {
     clientToken: "",
     // 随机数
     random: "",
-    LoginList: "",
-    //
-    Token: "",
+    // 登录用户信息
+    UserLoginInfoList: "",
   },
   mutations: {
     setclientToken(state, payload) {
@@ -17,7 +16,7 @@ export default {
     },
     // 登录成功返回的数据
     setLoginSin(state, payload) {
-      localStorage.setItem("token", payload);
+      state.Token = payload;
     },
   },
   actions: {
@@ -25,18 +24,21 @@ export default {
     async getclientToken(context) {
       const random = Math.floor(Math.random() * (9999 - 1000)) + 1000;
       console.log(random, "随机数");
-      const res = await VerifyCode(random);
-      console.log(res, "验证码");
-      context.commit("setclientToken", [res.request.responseURL, random]);
+      const clientToken = await VerifyCode(random);
+      console.log(clientToken, "验证码");
+      context.commit("setclientToken", [clientToken, random]);
     },
-    // 登录
+    // 用户登录信息
     async Login(context, payload) {
       // 请求的数据
-      console.log(payload);
-      const { data } = await Login(payload);
-      console.log(data, "请求登录数据");
+      const res = await Login(payload);
+      const UserLoginInfo = res.data;
+      console.log(res.data, "用户登录数据");
+      // 用户基本信息
+      const UserBasicInfo = await getUserInfo(UserLoginInfo.userId);
+      console.log(UserBasicInfo, "用户基本信息");
+      context.commit("setLoginSin", UserLoginInfo.token);
       // 把token给存入本地
-      context.commit("setLoginSin", data.token);
     },
   },
   getters: {},

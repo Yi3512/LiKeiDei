@@ -78,7 +78,9 @@ export default {
             trigger: "blur",
           },
         ],
-        Verification: [],
+        Verification: [
+          { required: true, message: "请输入验证码", trigger: "blur" },
+        ],
       },
     };
   },
@@ -94,8 +96,8 @@ export default {
     onverify() {
       this.getclientToken();
     },
-    isLogin() {
-      this.$refs.loginFrom.validate(async (success) => {
+    async isLogin() {
+      await this.$refs.loginFrom.validate(async (success) => {
         await this.Login({
           // 用户名
           loginName: this.loginForm.user,

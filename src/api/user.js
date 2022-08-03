@@ -14,7 +14,7 @@ export function VerifyCode(clientToken) {
 }
 /**
  * 登录请求
- * @param {Object} data 
+ * @param {Object} data
  * @returns Promise
  */
 export function Login(data) {
@@ -22,5 +22,16 @@ export function Login(data) {
     method: "POST",
     url: `user-service/user/login`,
     data,
+  });
+}
+/**
+ * 获取用户基本信息
+ * @param {String} id
+ * @returns Promise
+ */
+export function getUserInfo(id) {
+  return request({
+    method: "GET",
+    url: `user-service/user/${id}`,
   });
 }
