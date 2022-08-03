@@ -36,7 +36,9 @@
             </span>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="isLogin">登录</el-button>
+            <el-button type="primary" :loading="isLoading" @click="isLogin"
+              >登录</el-button
+            >
           </el-form-item>
         </el-form>
       </div>
@@ -51,6 +53,7 @@ const { mapState: mapUserState, mapActions: mapUserActions } =
 export default {
   data() {
     return {
+      isLoading: false,
       // 输入框
       loginForm: {
         // 用户
@@ -97,30 +100,31 @@ export default {
       this.getclientToken();
     },
     async isLogin() {
-      await this.$refs.loginFrom.validate(async (success) => {
-        await this.Login({
-          // 用户名
-          loginName: this.loginForm.user,
-          // 密码
-          password: this.loginForm.password,
-          // 手机号
-          mobile: "",
-          // 验证码
-          code: this.loginForm.Verification,
-          // 随机数
-          clientToken: this.random,
-          // 登录类型 0：后台；1：运营运维端；2：合作商后台
-          loginType: 0,
-          // 账号(合作商登录需要，手机号)
-          account: "",
+      this.isLoading = true;
+      try {
+        await this.$refs.loginFrom.validate(async (success) => {
+          await this.Login({
+            // 用户名
+            loginName: this.loginForm.user,
+            // 密码
+            password: this.loginForm.password,
+            // 手机号
+            mobile: "",
+            // 验证码
+            code: this.loginForm.Verification,
+            // 随机数
+            clientToken: this.random,
+            // 登录类型 0：后台；1：运营运维端；2：合作商后台
+            loginType: 0,
+            // 账号(合作商登录需要，手机号)
+            account: "",
+          });
+          this.$router.push("/dashboard");
+          this.$message.success("登录成功");
         });
-        this.$router.push("/dashboard");
-        this.$message({
-          showClose: true,
-          message: "登录成功!",
-          type: "success",
-        });
-      });
+      } finally {
+        this.isLoading = false;
+      }
     },
   },
 };

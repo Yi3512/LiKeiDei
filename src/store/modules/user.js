@@ -16,7 +16,7 @@ export default {
     },
     // 登录成功返回的数据
     setLoginSin(state, payload) {
-      state.Token = payload;
+      state.UserLoginInfoList = payload;
     },
   },
   actions: {
@@ -33,12 +33,15 @@ export default {
       // 请求的数据
       const res = await Login(payload);
       const UserLoginInfo = res;
-      console.log(res, "用户登录数据");
-      // 用户基本信息
-      // const UserBasicInfo = await getUserInfo(UserLoginInfo.data.userId);
-      // console.log(UserBasicInfo, "用户基本信息");
-      context.commit("setLoginSin", UserLoginInfo.data.token);
+      console.log(UserLoginInfo, "用户登录数据");
+      context.commit("setLoginSin", UserLoginInfo);
       // 把token给存入本地
+    },
+    async getUserInfo(context) {
+      // 用户基本信息
+      console.log(context, 123);
+      const UserBasicInfo = await getUserInfo(context.UserLoginInfoList.userId);
+      console.log(UserBasicInfo, "用户基本信息");
     },
   },
   getters: {},
