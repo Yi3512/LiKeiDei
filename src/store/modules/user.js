@@ -41,7 +41,7 @@ export default {
     },
     async getUserInfo(context) {
       // 用户基本信息
-      console.log(context, 123);
+      // console.log(context, 123);
       const UserBasicInfo = await getUserInfo(context.UserLoginInfoList.userId);
       console.log(UserBasicInfo, "用户基本信息");
     },

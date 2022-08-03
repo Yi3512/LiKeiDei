@@ -5,7 +5,7 @@ const whiteList = ["/login", "/404"];
 
 router.beforeEach((to, from, next) => {
   const token = store.state.user.token;
-  console.log(token);
+  // console.log(token);
   if (token) {
     // store.dispatch("user/getUserInfo");
     // 是 跳到首页
