@@ -95,7 +95,7 @@ export default {
   },
 
   methods: {
-    ...mapUserActions(["getclientToken", "Login"]),
+    ...mapUserActions(["getclientToken", "Login", "getUserInfo"]),
     onverify() {
       this.getclientToken();
     },

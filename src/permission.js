@@ -4,10 +4,15 @@ import store from "./store";
 const whiteList = ["/login", "/404"];
 
 router.beforeEach((to, from, next) => {
-  const token = store.state.user.token;
+  const token = store.state.user.UserLoginInfoList.token;
   // console.log(token);
   if (token) {
-    // store.dispatch("user/getUserInfo");
+    if (!store.state.user.UserInfo.userId) {
+      store.dispatch(
+        "user/getUserInfo",
+        store.state.user.UserLoginInfoList.userId
+      );
+    }
     // 是 跳到首页
     if (to.path === "/login") return next("/");
     // 不是 直接进入

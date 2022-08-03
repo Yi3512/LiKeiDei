@@ -8,7 +8,9 @@ export default {
     random: "",
     // 登录用户信息
     UserLoginInfoList: "",
-    token: "",
+    token: '',
+    // 基本用户信息
+    UserInfo: "",
   },
   mutations: {
     setclientToken(state, payload) {
@@ -18,7 +20,10 @@ export default {
     // 登录成功返回的数据
     setLoginSin(state, payload) {
       state.UserLoginInfoList = payload;
-      state.token = payload.token;
+    },
+    // 用户
+    getUserId(state, payload) {
+      state.UserInfo = payload;
     },
   },
   actions: {
@@ -33,23 +38,21 @@ export default {
     // 用户登录信息
     async Login(context, payload) {
       // 请求的数据
-      const res = await Login(payload);
-      const UserLoginInfo = res;
+      const UserLoginInfo = await Login(payload);
       console.log(UserLoginInfo, "用户登录数据");
       context.commit("setLoginSin", UserLoginInfo);
-      // 把token给存入本地
     },
-    async getUserInfo(context) {
+    async getUserInfo(context, payload) {
       // 用户基本信息
-      // console.log(context, 123);
-      const UserBasicInfo = await getUserInfo(context.UserLoginInfoList.userId);
+      const UserBasicInfo = await getUserInfo(payload);
       console.log(UserBasicInfo, "用户基本信息");
+      context.commit("getUserId", UserBasicInfo);
     },
     // 退出
-    logout(context) {
-      context.commit("setToken", "");
-      context.commit("setUserInfo", {});
-    },
+    // logout(context) {
+    //   context.commit("setToken", "");
+    //   context.commit("setUserInfo", {});
+    // },
   },
   getters: {},
 };

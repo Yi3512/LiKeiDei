@@ -7,9 +7,8 @@ const service = axios.create({
   timeout: 5000,
 }); // 创建一个axios的实例
 service.interceptors.request.use((config) => {
-  console.log(config, "config");
-  if (!store.state.user.token) {
-    config.headers.Authorization = "Bearer " + store.state.user.token;
+  if (store.state.user.UserLoginInfoList.token) {
+    config.headers.Authorization = store.state.user.UserLoginInfoList.token;
   }
   return config;
 }); // 请求拦截器\
@@ -20,7 +19,13 @@ service.interceptors.response.use(
     if (res.config.url.includes("/api/user-service/user/imageCode/")) {
       return res.request.responseURL;
     }
+    // 登录判断
     if (res.data.success) {
+      console.log(res);
+      return res.data;
+    }
+    // 用户基本
+    if (res.data.status) {
       return res.data;
     }
     Message.error(res.data.msg);
@@ -28,7 +33,7 @@ service.interceptors.response.use(
   },
   function (error) {
     // console.log(error);
-    Message.error(error.msg);
+    Message.error("登录异常");
     return Promise.reject(error);
   }
 );
